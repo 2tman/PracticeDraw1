@@ -34,19 +34,21 @@ public class Practice10HistogramView extends View {
     //描述文字
     Paint paintDesc = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    int startX = 50;
+    int xPadding = 50;
     int startY = 50;
     int rectHeight = 300;//图形区域的高度
     int rectWidth = 500;//图形区域的宽度
     int barWidth = 0;//柱状图的宽度
     int barSpace = 0;
     int xtextHeight = 0;//x轴文字距离x轴线的高度
-    int xOffset = 10;//x轴左右偏移
+    int xBarOffset = 10;//x轴左右偏移
 
     {
         barWidth = ScreenUtils.dp2px(getContext(), 25);
         xtextHeight = ScreenUtils.dp2px(getContext(), 20);
-        xOffset = ScreenUtils.dp2px(getContext(), 10);
+        xBarOffset = ScreenUtils.dp2px(getContext(), 10);
+        xPadding = ScreenUtils.dp2px(getContext(), 30);//左右边距
+        rectWidth = ScreenUtils.getScreenSize(getContext()).widthPixels - xPadding*2;
     }
 
     private List<BarEntity> datas;
@@ -70,6 +72,7 @@ public class Practice10HistogramView extends View {
         datas = new ArrayList<>();
         //模拟数据
         initDatas();
+        setPadding(xPadding, 0, xPadding, 0);
         barSpace = getBarSpace();
     }
 
@@ -110,18 +113,18 @@ public class Practice10HistogramView extends View {
 
             int textWidth = ScreenUtils.calcTextWidth(paintXText, mLabel);
             int textOffSet = (barWidth - textWidth) / 2;
-            int textStartX = startX + barSpace * i + barWidth * i + textOffSet + xOffset;
+            int textxPadding = xPadding + barSpace * i + barWidth * i + textOffSet + xBarOffset;
 
             /**
              * 3.x轴文字
              */
-            drawXText(canvas, mLabel, textStartX, textY);
+            drawXText(canvas, mLabel, textxPadding, textY);
 
-            int barStartX = startX + barSpace * i + barWidth * i + xOffset;
+            int barxPadding = xPadding + barSpace * i + barWidth * i + xBarOffset;
             /**
              * 4. 绘制Bar Rect
              */
-            drawBar(canvas, mValue, barStartX);
+            drawBar(canvas, mValue, barxPadding);
         }
 
 
@@ -137,7 +140,7 @@ public class Practice10HistogramView extends View {
         paintYLineLeft.setStrokeWidth(2);
 
         int stopYLineY = startY + rectHeight;
-        canvas.drawLine(startX, startY, startX, stopYLineY, paintYLineLeft);
+        canvas.drawLine(xPadding, startY, xPadding, stopYLineY, paintYLineLeft);
     }
 
     /**
@@ -150,8 +153,8 @@ public class Practice10HistogramView extends View {
         paintXLine.setStrokeWidth(2);
 
         int xLineStartY = startY + rectHeight;
-        int xLineStopX = startX + rectWidth;
-        canvas.drawLine(startX, xLineStartY, xLineStopX, xLineStartY, paintXLine);
+        int xLineStopX = xPadding + rectWidth;
+        canvas.drawLine(xPadding, xLineStartY, xLineStopX, xLineStartY, paintXLine);
     }
 
     /**
@@ -159,8 +162,8 @@ public class Practice10HistogramView extends View {
      *
      * @param canvas
      */
-    private void drawXText(Canvas canvas, String mLabel, int textStartX, int textY) {
-        canvas.drawText(mLabel + "", textStartX, textY, paintXText);
+    private void drawXText(Canvas canvas, String mLabel, int textxPadding, int textY) {
+        canvas.drawText(mLabel + "", textxPadding, textY, paintXText);
     }
 
     /**
@@ -168,10 +171,10 @@ public class Practice10HistogramView extends View {
      *
      * @param canvas
      */
-    private void drawBar(Canvas canvas, float mValue, int barStartX) {
+    private void drawBar(Canvas canvas, float mValue, int barxPadding) {
         RectF rectF = new RectF();
-        rectF.left = barStartX;
-        rectF.right = barStartX + barWidth;
+        rectF.left = barxPadding;
+        rectF.right = barxPadding + barWidth;
         rectF.bottom = startY + rectHeight;
 
         //TODO 如果y轴右数据，则按实际比例换算
@@ -189,7 +192,7 @@ public class Practice10HistogramView extends View {
     private int getBarSpace() {
         int barSize = datas.size();
         int totalBarWidth = barWidth * barSize;
-        int totalBarSpace = rectWidth - totalBarWidth - xOffset * 2;
+        int totalBarSpace = rectWidth - totalBarWidth - xBarOffset * 2;
         int barSpace = totalBarSpace / (barSize - 1);
         return barSpace;
     }
