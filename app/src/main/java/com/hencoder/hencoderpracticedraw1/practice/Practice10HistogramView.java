@@ -31,9 +31,6 @@ public class Practice10HistogramView extends View {
     //柱状图
     Paint paintRect = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    //描述文字
-    Paint paintDesc = new Paint(Paint.ANTI_ALIAS_FLAG);
-
     int xPadding = 50;
     int startY = 50;
     int rectHeight = 300;//图形区域的高度
