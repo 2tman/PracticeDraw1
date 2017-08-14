@@ -11,10 +11,4 @@ HenCoder 绘制 1 练习项目
 
 项目是一个可以直接运行的 Android App 项目，项目运行后，在手机上打开是这样的：
 
-柱状图：
-
-![](images/barchart.png)
-
-饼图：
-
-![](images/piechart.png)
+柱状图：![](images/barchart.png)    饼图：![](images/piechart.png0)
