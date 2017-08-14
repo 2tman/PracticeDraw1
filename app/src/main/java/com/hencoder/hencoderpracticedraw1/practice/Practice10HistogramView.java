@@ -176,9 +176,11 @@ public class Practice10HistogramView extends View {
 
         //TODO 如果y轴右数据，则按实际比例换算
         int randHeight = (int)Math.round(rectHeight * Math.random());
-        rectF.top = rectF.bottom - randHeight;
+        if(randHeight>0) {
+            rectF.top = rectF.bottom - randHeight;
 
-        canvas.drawRect(rectF, paintRect);
+            canvas.drawRect(rectF, paintRect);
+        }
     }
 
     /**

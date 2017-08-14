@@ -34,7 +34,7 @@ public class Practice8DrawArcView extends View {
         //扇形
         canvas.drawArc(new RectF(200, 200, 400, 400), 240, 100, true, paint);
 
-        //底部扇形
+        //底部弧形
         canvas.drawArc(new RectF(200, 200, 400, 400), 20, 140, false, paint);
 
         //画线模式
